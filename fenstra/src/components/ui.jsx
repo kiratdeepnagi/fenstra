@@ -1,6 +1,10 @@
 "use client";
-import { CheckCircle2, AlertCircle } from "lucide-react";
+import { CheckCircle2, AlertCircle, Folder, FileText, Calendar, DollarSign, Users, Package, Wrench, LayoutDashboard, Sparkles, Settings } from "lucide-react";
 import { useEffect, useState } from "react";
+
+const ICONS = {
+  Folder, FileText, Calendar, DollarSign, Users, Package, Wrench, LayoutDashboard, Sparkles, Settings
+};
 
 export function Logo({ light = false }) {
   return (
@@ -60,7 +64,8 @@ export function Field({ label, children }) {
   );
 }
 
-export function StatCard({ label, value, icon: Icon }) {
+export function StatCard({ label, value, iconName }) {
+  const Icon = iconName ? ICONS[iconName] : null;
   return (
     <div className="bg-white border border-neutral-200 rounded-2xl p-4 shadow-sm">
       <div className="flex items-start justify-between mb-8">
@@ -87,6 +92,17 @@ export function Header({ title, subtitle }) {
       <h1 className="font-serif text-4xl md:text-5xl leading-tight mb-1">{title}</h1>
       {subtitle && <p className="text-neutral-600">{subtitle}</p>}
     </div>
+  );
+}
+
+export function QuickLinkCard({ href, title, desc, iconName }) {
+  const Icon = iconName ? ICONS[iconName] : null;
+  return (
+    <a href={href} className="bg-white border border-neutral-200 rounded-2xl p-5 shadow-sm text-left hover:border-neutral-900 transition group block">
+      {Icon && <Icon size={20} className="mb-3 text-neutral-700" />}
+      <div className="font-serif text-xl mb-1">{title}</div>
+      <div className="text-sm text-neutral-500">{desc}</div>
+    </a>
   );
 }
 
