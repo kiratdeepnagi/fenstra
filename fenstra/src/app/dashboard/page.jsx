@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import { Folder, FileText, Calendar, DollarSign, Users, Package, Plus, ChevronRight, Wrench } from "lucide-react";
-import { Header, StatCard, EmptyCard, StatusPill } from "@/components/ui";
+import { Plus } from "lucide-react";
+import { Header, StatCard, EmptyCard, StatusPill, QuickLinkCard } from "@/components/ui";
 import { WindowPreview } from "@/components/preview";
 
 export default async function DashboardHome() {
@@ -11,10 +11,10 @@ export default async function DashboardHome() {
 
   if (profile.role === "admin") return <AdminOverview profile={profile} supabase={supabase} />;
   if (profile.role === "staff") return <StaffOverview profile={profile} supabase={supabase} />;
-  return <CustomerOverview profile={profile} supabase={supabase} />;
+  return <CustomerOverview profile={profile} supabase={supabase} user={user} />;
 }
 
-async function CustomerOverview({ profile, supabase }) {
+async function CustomerOverview({ profile, supabase, user }) {
   const { data: projects = [] } = await supabase.from("projects").select("*").order("created_at", { ascending: false });
   const { data: enquiries = [] } = await supabase.from("enquiries").select("*");
   const { data: surveys = [] } = await supabase.from("surveys").select("*");
@@ -24,10 +24,10 @@ async function CustomerOverview({ profile, supabase }) {
     <div>
       <Header title={`Hello ${profile.full_name?.split(" ")[0] || "there"}.`} subtitle="Your private workspace — designs, quotes and bookings." />
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <StatCard label="Saved projects" value={projects?.length || 0} icon={Folder} />
-        <StatCard label="Open enquiries" value={(enquiries || []).filter((e) => e.status === "new").length} icon={FileText} />
-        <StatCard label="Surveys booked" value={surveys?.length || 0} icon={Calendar} />
-        <StatCard label="Quoted total" value={`£${total.toLocaleString()}`} icon={DollarSign} />
+        <StatCard label="Saved projects" value={projects?.length || 0} iconName="Folder" />
+        <StatCard label="Open enquiries" value={(enquiries || []).filter((e) => e.status === "new").length} iconName="FileText" />
+        <StatCard label="Surveys booked" value={surveys?.length || 0} iconName="Calendar" />
+        <StatCard label="Quoted total" value={`£${total.toLocaleString()}`} iconName="DollarSign" />
       </div>
 
       <div className="flex items-center justify-between mb-4">
@@ -74,14 +74,14 @@ async function StaffOverview({ profile, supabase }) {
     <div>
       <Header title="Staff dashboard" subtitle={`Hi ${profile.full_name?.split(" ")[0]} — here's what needs attention.`} />
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <StatCard label="New enquiries" value={(enquiries || []).filter((e) => e.status === "new").length} icon={FileText} />
-        <StatCard label="Pending surveys" value={(surveys || []).filter((s) => s.status !== "completed").length} icon={Calendar} />
-        <StatCard label="Draft quotes" value={(projects || []).filter((p) => p.status === "draft").length} icon={Wrench} />
-        <StatCard label="Active customers" value={customers?.length || 0} icon={Users} />
+        <StatCard label="New enquiries" value={(enquiries || []).filter((e) => e.status === "new").length} iconName="FileText" />
+        <StatCard label="Pending surveys" value={(surveys || []).filter((s) => s.status !== "completed").length} iconName="Calendar" />
+        <StatCard label="Draft quotes" value={(projects || []).filter((p) => p.status === "draft").length} iconName="Wrench" />
+        <StatCard label="Active customers" value={customers?.length || 0} iconName="Users" />
       </div>
       <div className="grid md:grid-cols-2 gap-4">
-        <QuickLink href="/dashboard/enquiries" title="Enquiries inbox" desc={`${(enquiries || []).filter((e) => e.status === "new").length} awaiting response`} icon={FileText} />
-        <QuickLink href="/dashboard/surveys" title="Survey bookings" desc="Confirm and schedule site visits" icon={Calendar} />
+        <QuickLinkCard href="/dashboard/enquiries" title="Enquiries inbox" desc={`${(enquiries || []).filter((e) => e.status === "new").length} awaiting response`} iconName="FileText" />
+        <QuickLinkCard href="/dashboard/surveys" title="Survey bookings" desc="Confirm and schedule site visits" iconName="Calendar" />
       </div>
     </div>
   );
@@ -97,30 +97,17 @@ async function AdminOverview({ profile, supabase }) {
     <div>
       <Header title="Admin overview" subtitle={`Welcome, ${profile.full_name?.split(" ")[0]} — full platform control.`} />
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <StatCard label="Total users" value={users?.length || 0} icon={Users} />
-        <StatCard label="All projects" value={projects?.length || 0} icon={Folder} />
-        <StatCard label="Open enquiries" value={(enquiries || []).filter((e) => e.status === "new").length} icon={FileText} />
-        <StatCard label="Surveys booked" value={surveys?.length || 0} icon={Calendar} />
+        <StatCard label="Total users" value={users?.length || 0} iconName="Users" />
+        <StatCard label="All projects" value={projects?.length || 0} iconName="Folder" />
+        <StatCard label="Open enquiries" value={(enquiries || []).filter((e) => e.status === "new").length} iconName="FileText" />
+        <StatCard label="Surveys booked" value={surveys?.length || 0} iconName="Calendar" />
       </div>
       <div className="grid md:grid-cols-2 gap-4">
-        <QuickLink href="/dashboard/admin/users" title="Manage users" desc="Create, edit, disable accounts" icon={Users} />
-        <QuickLink href="/dashboard/admin/products" title="Products & profiles" desc="Windows, doors, materials, colours" icon={Package} />
-        <QuickLink href="/dashboard/admin/pricing" title="Pricing logic" desc="Base prices, multipliers, upgrades" icon={DollarSign} />
-        <QuickLink href="/dashboard/enquiries" title="Enquiries inbox" desc="Respond to customer queries" icon={FileText} />
+        <QuickLinkCard href="/dashboard/admin/users" title="Manage users" desc="Create, edit, disable accounts" iconName="Users" />
+        <QuickLinkCard href="/dashboard/admin/products" title="Products & profiles" desc="Windows, doors, materials, colours" iconName="Package" />
+        <QuickLinkCard href="/dashboard/admin/pricing" title="Pricing logic" desc="Base prices, multipliers, upgrades" iconName="DollarSign" />
+        <QuickLinkCard href="/dashboard/enquiries" title="Enquiries inbox" desc="Respond to customer queries" iconName="FileText" />
       </div>
     </div>
-  );
-}
-
-function QuickLink({ href, title, desc, icon: Icon }) {
-  return (
-    <Link href={href} className="bg-white border border-neutral-200 rounded-2xl p-5 shadow-sm text-left hover:border-neutral-900 transition group block">
-      <Icon size={20} className="mb-3 text-neutral-700" />
-      <div className="font-serif text-xl mb-1 flex items-center justify-between">
-        {title}
-        <ChevronRight size={18} className="group-hover:translate-x-0.5 transition" />
-      </div>
-      <div className="text-sm text-neutral-500">{desc}</div>
-    </Link>
   );
 }
