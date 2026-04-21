@@ -183,7 +183,7 @@ If you own a domain like `fenstra.co.uk`:
 **Verification email doesn't arrive** — Check spam. Or in Supabase → Authentication → Users, manually click the user and "Confirm email".
 
 **"Error: relation 'public.profiles' does not exist"** — You forgot Step 3. Go run the schema SQL.
-
+ 
 ---
 
 ## What's included vs what's not
