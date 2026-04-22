@@ -7,7 +7,7 @@ import { Plus, Download, Trash2, Edit } from "lucide-react";
 import { Header, StatusPill, EmptyCard, Toast, useToast } from "@/components/ui";
 import { WindowPreview } from "@/components/preview";
 
-export default function ProjectsClient({ initialProjects = [], profile }) {
+export function ProjectsClient({ initialProjects = [], profile }) {
   const [projects, setProjects] = useState(initialProjects);
   const [busy, setBusy] = useState(null);
   const { toast, show, clear } = useToast();
