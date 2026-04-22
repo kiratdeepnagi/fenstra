@@ -34,6 +34,16 @@ export default function ProjectsClient({ initialProjects = [], profile }) {
     const total = subtotal + vat;
     const uValue = project.glazing === "Triple Glazed" ? "0.8" : project.glazing === "Double Glazed" ? "1.2" : "1.4";
 
+    // Try to parse extra config from notes JSON (saved by upgraded designer)
+    let extras = {};
+    try {
+      if (project.notes && project.notes.trim().startsWith("{")) {
+        extras = JSON.parse(project.notes);
+      }
+    } catch (e) { /* plain text notes */ }
+    const colourName = extras.colourName || project.colourName || project.colour || "—";
+    const userNotes = extras.userNotes || (typeof project.notes === "string" && !project.notes.trim().startsWith("{") ? project.notes : "");
+
     // Build inline SVG for the drawing
     const cfg = { ...project, id: project.id };
     const w = project.width || 1200;
@@ -50,7 +60,7 @@ export default function ProjectsClient({ initialProjects = [], profile }) {
       "Fire Doors", "Shopfront Doors", "Stable Doors", "Internal Doors"].includes(project.style);
 
     const frameColour = project.colour && project.colour.startsWith("#") ? project.colour : "#FFFFFF";
-    const isWood = ["Oak", "Rosewood", "Walnut", "Golden Oak"].includes(project.colourName) ||
+    const isWood = ["Oak", "Rosewood", "Walnut", "Golden Oak", "Irish Oak", "Golden Oak", "Whitegrain"].includes(colourName) ||
                    ["Timber", "Hardwood", "Softwood"].includes(project.material);
 
     const html = `<!DOCTYPE html>
@@ -285,7 +295,7 @@ export default function ProjectsClient({ initialProjects = [], profile }) {
     <div class="spec-row"><span class="spec-label">Product</span><span class="spec-value">${isDoor ? "Door" : "Window"}</span></div>
     <div class="spec-row"><span class="spec-label">Style</span><span class="spec-value">${project.style || "—"}</span></div>
     <div class="spec-row"><span class="spec-label">Material</span><span class="spec-value">${project.material || "—"}</span></div>
-    <div class="spec-row"><span class="spec-label">Colour</span><span class="spec-value">${project.colourName || "—"}</span></div>
+    <div class="spec-row"><span class="spec-label">Colour</span><span class="spec-value">${colourName}</span></div>
     <div class="spec-row"><span class="spec-label">Width</span><span class="spec-value">${w} mm</span></div>
     <div class="spec-row"><span class="spec-label">Height</span><span class="spec-value">${h} mm</span></div>
     <div class="spec-row"><span class="spec-label">Area</span><span class="spec-value">${area} m²</span></div>
