@@ -54,7 +54,7 @@ export default function Landing() {
         </div>
       </section>
 
-      <<footer className="px-6 md:px-12 py-8 text-xs text-neutral-500 font-mono border-t border-neutral-900/10 flex flex-wrap items-center gap-x-3 gap-y-2">
+      <footer className="px-6 md:px-12 py-8 text-xs text-neutral-500 font-mono border-t border-neutral-900/10 flex flex-wrap items-center gap-x-3 gap-y-2">
         <span>© 2026 Fenstra · Window &amp; Door Design Pro UK</span>
         <span className="hidden sm:inline">·</span>
         <a href="tel:+448000886341" className="inline-flex items-center gap-1.5 text-neutral-900 hover:text-amber-800 transition font-medium">
