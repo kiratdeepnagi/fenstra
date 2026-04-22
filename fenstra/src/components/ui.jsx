@@ -6,18 +6,43 @@ const ICONS = {
   Folder, FileText, Calendar, DollarSign, Users, Package, Wrench, LayoutDashboard, Sparkles, Settings
 };
 
-export function Logo({ light = false }) {
+export function Logo({ light = false, size = "md" }) {
+  const scale = { sm: 0.75, md: 1, lg: 1.3 }[size] || 1;
+  const wordColor = light ? "#fafaf7" : "#1a1a1a";
+  const discColor = light ? "#e8c87a" : "#1a1a1a";
+  const fColor = light ? "#1a1a1a" : "#f5e6c8";
+
   return (
-    <div className="flex items-center gap-2">
-      <div className={`w-8 h-8 rounded-sm grid place-items-center ${light ? "bg-neutral-50" : "bg-neutral-900"}`}>
-        <div className={`w-4 h-4 grid grid-cols-2 grid-rows-2 ${light ? "border border-neutral-900" : "border border-amber-300"}`}>
-          {[0,1,2,3].map((i) => (
-            <div key={i} className={light ? "border border-neutral-900/40" : "border border-amber-300/40"} />
-          ))}
-        </div>
-      </div>
-      <span className="font-serif text-xl font-semibold tracking-tight">Fenstra</span>
-    </div>
+    <svg
+      viewBox="0 0 280 90"
+      height={48 * scale}
+      xmlns="http://www.w3.org/2000/svg"
+      style={{ display: "block" }}
+      aria-label="Fenstra"
+    >
+      <g transform="translate(0,12)">
+        <circle cx="33" cy="33" r="32" fill={discColor} />
+        <text
+          x="33"
+          y="48"
+          fontFamily="Playfair Display, Cormorant Garamond, Georgia, serif"
+          fontSize="42"
+          fontWeight="500"
+          fontStyle="italic"
+          fill={fColor}
+          textAnchor="middle"
+        >F</text>
+      </g>
+      <text
+        x="82"
+        y="54"
+        fontFamily="Playfair Display, Georgia, serif"
+        fontSize="48"
+        fontWeight="500"
+        fill={wordColor}
+        letterSpacing="-0.8"
+      >Fenstra</text>
+    </svg>
   );
 }
 
