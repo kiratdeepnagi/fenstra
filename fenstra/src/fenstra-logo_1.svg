@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 90" width="560" height="180">
+  <g transform="translate(0,12)">
+    <circle cx="33" cy="33" r="32" fill="#1a1a1a"/>
+    <text x="33" y="48" font-family="Playfair Display, Georgia, serif" font-size="42" font-weight="500" font-style="italic" fill="#f5e6c8" text-anchor="middle">F</text>
+  </g>
+  <text x="82" y="54" font-family="Playfair Display, Georgia, serif" font-size="48" font-weight="500" fill="#1a1a1a" letter-spacing="-0.8">Fenstra</text>
+</svg>
