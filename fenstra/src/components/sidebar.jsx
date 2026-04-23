@@ -4,7 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import {
   LayoutDashboard, Folder, FileText, Calendar, Settings, LogOut, Sparkles,
-  Users, Package, DollarSign, Menu, X,
+  Users, Package, DollarSign, Menu, X, ClipboardList,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { Logo } from "@/components/ui";
@@ -13,6 +13,7 @@ const MENUS = {
   customer: [
     { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
     { href: "/dashboard/designer", label: "New design", icon: Sparkles },
+    { href: "/dashboard/quotes", label: "Quotes", icon: ClipboardList },
     { href: "/dashboard/projects", label: "My projects", icon: Folder },
     { href: "/dashboard/enquiries", label: "Enquiries", icon: FileText },
     { href: "/dashboard/surveys", label: "Surveys", icon: Calendar },
@@ -20,12 +21,14 @@ const MENUS = {
   ],
   staff: [
     { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
+    { href: "/dashboard/quotes", label: "Quotes", icon: ClipboardList },
     { href: "/dashboard/enquiries", label: "Enquiries", icon: FileText },
     { href: "/dashboard/surveys", label: "Surveys", icon: Calendar },
     { href: "/dashboard/profile", label: "Settings", icon: Settings },
   ],
   admin: [
     { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
+    { href: "/dashboard/quotes", label: "Quotes", icon: ClipboardList },
     { href: "/dashboard/admin/users", label: "Users", icon: Users },
     { href: "/dashboard/admin/products", label: "Products", icon: Package },
     { href: "/dashboard/admin/pricing", label: "Pricing", icon: DollarSign },
